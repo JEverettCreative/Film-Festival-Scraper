@@ -63,6 +63,17 @@ router.get("/api/scrape", function(req, res) {
       });
   });
 
+//   API Route to pull all saved articles from DB
+  router.get("/api/saved", function(req, res) {
+    db.Article.find({ saved: true })
+        .then(function(dbArticle) {
+            res.json(dbArticle);
+        })
+        .catch(function(err) {
+            res.json(err);
+        });
+  });
+
   // Route for grabbing a specific Article by id, populate it with it's note
   app.get("/articles/:id", function(req, res) {
     // Using the id passed in the id parameter, prepare a query that finds the matching one in our db...
