@@ -5,7 +5,8 @@ var Schema = mongoose.Schema;
 var ArticleSchema = new Schema ({
     title: {
         type: String,
-        required: true
+        required: true,
+        unique: true
     },
 
     link: {
@@ -20,9 +21,9 @@ var ArticleSchema = new Schema ({
         maxlength: 300
     },
 
-    note: {
-        type: Schema.Types.ObjectId,
-        ref: "Note"
+    saved: {
+        type: Boolean,
+        default: false
     }
 });
 
