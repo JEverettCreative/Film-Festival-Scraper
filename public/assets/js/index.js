@@ -1,7 +1,7 @@
 $(document).ready(function() {
 
     var articleContainer = $(".article-container");
-    $(document).on("click", "save-btn", saveArticle);
+    $(document).on("click", ".save-btn", saveArticle);
     $(document).on("click", ".scrape", scrapeNewArticles);
 
     initializePage();
@@ -33,7 +33,7 @@ $(document).ready(function() {
                 "<div class='panel-heading'>",
                 "<h3>",
                 article.title,
-                "<a class='btn btn-success save'> Save Article</a>",
+                "<a class='btn btn-success save-btn'> Save Article</a>",
                 "<a class='btn btn-alert' href=" + article.link +
                 "> View Source</a>",
                 "</h3>",
