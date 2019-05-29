@@ -5,6 +5,7 @@ $(document).ready(function(){
     // $(document).on("click", ".notes-btn", pullNotes);
     $(document).on("click", ".create-note-btn", createNote);
     // $(document).on("click", ".delete-note-btn", deleteNotes);
+    $(document).on("click", ".modal-btn", createModal);
 
     initializePage();
 
@@ -61,6 +62,7 @@ $(document).ready(function(){
                 "</div>",
                 "<div class='panel-body'>",
                 article.summary,
+                "<a class='btn btn-alert modal-btn view-note-btn'>Comments</a>",
                 "</div>",
                 "</div>"
             ].join(""));
@@ -82,6 +84,37 @@ $(document).ready(function(){
             }
         });
     }
+
+    function createModal() {
+        var currentArticle = $(this).parents(".panel").data();
+
+        var newModal = [
+            "<div class='modal fade show' role='dialog' aria-modal='true' style='display: block'>",
+            "<div class='modal-dialog'>",
+            "<div class='modal-content'>",
+            "<div class='modal-header'>",
+            "<h4>Article Comments: " + currentArticle._id + "</h4>",
+            "</div>",
+            "<div class='modal-body'>",
+            "<ul class='list-group note-container'>",
+            "</ul>",
+            "<textarea placeholder='New Comment' rows='6' cols='60'>",
+            "</textarea>",
+            "<button class='btn btn-primary create-note-btn'>Add Comment",
+            "</button>",
+            "</div>",
+            "</div>",
+            "</div>",
+            "</div>"
+        ].join("");
+
+        $("body").append(newModal);
+        $(".modal").modal("show");
+    }
+    // Create modal should be called within the function to viewNotes
+    // that function should start by getting the panel data and calling the api route to pull all notes
+    // then it needs to render them and their buttons. Finally, a click function needs to be added to
+    // 'Add Comment' button that calls the route to post a new note to the database, then reload comments into the modal
 
     function createNote() {
         var currentArticle = $(this).parents(".panel").data();
