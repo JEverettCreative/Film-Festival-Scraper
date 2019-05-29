@@ -73,9 +73,11 @@ $(document).ready(function() {
         targetArticle.saved = true;
 
         $.ajax({
-            method: "PATCH",
-            url: "/api/articles",
-            data: targetArticle
+            method: "POST",
+            url: "/api/articles/" + targetArticle._id,
+            data: {
+                saved: true
+            }
         })
         .then(function(data){
             if (data.ok) {
@@ -88,7 +90,6 @@ $(document).ready(function() {
         $.get("/api/scrape")
             .then(function(data){
                 initializePage();
-                bootbox.alert("<h2 class='text-center m-top-80'>" + data.message + "</h3>");
             });
     }
 })

@@ -87,6 +87,18 @@ router.get("/api/scrape", function(req, res) {
             });
     });
 
+// Update an article to Saved in the DB
+    router.post("/api/articles/:id", function(req, res) {
+        db.Article.findByIdAndUpdate({ _id: req.params.id }, { saved: true })
+            .then(function(dbArticle) {
+                render.json("Article deleted from Saved.");
+            })
+            .catch(function(err) {
+                res.json(err);
+            });
+    });
+
+
 //   // Route for grabbing a specific Article by id, populate it with it's note
 //   app.get("/api/articles/:id", function(req, res) {
 //     // Using the id passed in the id parameter, prepare a query that finds the matching one in our db...

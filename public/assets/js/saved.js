@@ -72,7 +72,7 @@ $(document).ready(function(){
 
         $.ajax({
             method: "DELETE",
-            url: "/api/articles" + targetArticle._id
+            url: "/api/articles/" + targetArticle._id
         })
         .then(function(data) {
             if (data.ok) {
