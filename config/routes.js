@@ -76,11 +76,11 @@ router.get("/api/scrape", function(req, res) {
             });
     });
 
-// Delete an article from Saved in DB
+// Delete an article from the Database (entirely!)
     router.delete("/api/articles/:id", function(req, res) {
-        db.Article.findByIdAndUpdate({ _id: req.params.id }, { saved: false })
+        db.Article.deleteOne({ _id: req.params.id })
             .then(function(dbArticle) {
-                render.json("Article deleted from Saved.");
+                res.json(dbArticle);
             })
             .catch(function(err) {
                 res.json(err);
