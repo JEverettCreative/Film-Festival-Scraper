@@ -54,7 +54,7 @@ router.get("/api/scrape", function(req, res) {
   // Route for getting all Articles from the db
   router.get("/api/articles", function(req, res) {
     // Grab every document in the Articles collection
-    db.Article.find({})
+    db.Article.find({ saved: false })
       .then(function(dbArticle) {
         // If we were able to successfully find Articles, send them back to the client
         res.json(dbArticle);
@@ -67,13 +67,13 @@ router.get("/api/scrape", function(req, res) {
 
 //   API Route to pull all saved articles from DB
     router.get("/api/saved", function(req, res) {
-    db.Article.find({ saved: true })
-        .then(function(dbArticle) {
-            res.json(dbArticle);
-        })
-        .catch(function(err) {
-            res.json(err);
-        });
+        db.Article.find({ saved: true })
+            .then(function(dbArticle) {
+                res.json(dbArticle);
+            })
+            .catch(function(err) {
+                res.json(err);
+            });
     });
 
 // Delete an article from Saved in DB

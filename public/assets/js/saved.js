@@ -10,9 +10,9 @@ $(document).ready(function(){
 
     function initializePage() {
         articleContainer.empty();
-        $.get("/api/articles?saved=true")
+        $.get("/api/saved")
             .then(function(data) {
-                if (data && data.length) {
+                if (data) {
                     renderArticles(data);
                 }
                 else {
@@ -44,6 +44,8 @@ $(document).ready(function(){
         for (var i = 0; i < articles.length; i++) {
             articlesArray.push(createContents(articles[i]));
         }
+
+        articleContainer.append(articlesArray);
     }
 
     function createContents(article) {

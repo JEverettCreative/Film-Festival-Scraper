@@ -8,7 +8,7 @@ $(document).ready(function() {
 
     function initializePage() {
         articleContainer.empty();
-        $.get("/api/articles?saved=false")
+        $.get("/api/articles")
             .then(function(data) {
                 if (data && data.length) {
                     renderArticles(data);
