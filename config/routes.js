@@ -98,17 +98,33 @@ router.post("/api/articles/:id", function(req, res) {
         });
 });
 
+// Create a new note for an article
+router.post("/api/notes/:id", function(req, res){
+    var newNote = req.body;
+    var articleID = req.params.id;
+
+    db.Note.create(newNote)
+        .then(function(dbNote) {
+        return db.Article.findOneAndUpdate({_id: articleID}, {note: dbNote._id}, {new: true});
+        })
+        .then(function(dbArticle) {
+        res.json(dbArticle);
+        })
+        .catch(function(err) {
+        console.log(err);
+        });
+});
+
 // View any existing notes for an article
 router.get("/api/notes/:id", function(req, res) {
     db.Article.findOne({ _id: req.params.id })
-        .populate("note")
+        .populate("Note")
         .then(function(dbArticle) {
             res.json(dbArticle);
         })
         .catch(function(err) {
             res.json(err);
         });
-
 });
 
 

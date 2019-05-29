@@ -87,37 +87,47 @@ $(document).ready(function(){
 
     function createModal() {
         var currentArticle = $(this).parents(".panel").data();
+        $(".note-container").empty();
+        // Threw the modal creation into an Ajax call with the renderNotesList function following
+        // attempting to bring the pieces together so that comments can fill when the modal loads
+        $.get("/api/notes/" + currentArticle._id)
+            .then(function(data) {
 
-        var newModal = [
-            "<div class='modal fade show' role='dialog' aria-modal='true' style='display: block'>",
-            "<div class='modal-dialog'>",
-            "<div class='modal-content'>",
-            "<div class='modal-header'>",
-            "<h4>Article Comments: " + currentArticle._id + "</h4>",
-            "</div>",
-            "<div class='modal-body'>",
-            "<ul class='list-group note-container'>",
-            "</ul>",
-            "<textarea placeholder='New Comment' rows='6' cols='60'>",
-            "</textarea>",
-            "<button class='btn btn-primary create-note-btn'>Add Comment",
-            "</button>",
-            "</div>",
-            "</div>",
-            "</div>",
-            "</div>"
-        ].join("");
+                var newModal = [
+                    "<div class='modal fade show' role='dialog' aria-modal='true' style='display: block'>",
+                    "<div class='modal-dialog'>",
+                    "<div class='modal-content'>",
+                    "<div class='modal-header'>",
+                    "<h4>Article Comments: " + currentArticle._id + "</h4>",
+                    "</div>",
+                    "<div class='modal-body'>",
+                    "<ul class='list-group note-container'>",
+                    "</ul>",
+                    "<textarea placeholder='New Comment' rows='6' cols='60'>",
+                    "</textarea>",
+                    "<button class='btn btn-primary create-note-btn'>Add Comment",
+                    "</button>",
+                    "</div>",
+                    "</div>",
+                    "</div>",
+                    "</div>"
+                ].join("");
+        
+                renderNotesList(currentArticle);
+        
+                $("body").append(newModal);
+                $(".modal").modal("show");
 
-        $("body").append(newModal);
-        $(".modal").modal("show");
+            });
+        
     }
-    // Create modal should be called within the function to viewNotes
+    // CreateModal should be called within the function to viewNotes
     // that function should start by getting the panel data and calling the api route to pull all notes
     // then it needs to render them and their buttons. Finally, a click function needs to be added to
     // 'Add Comment' button that calls the route to post a new note to the database, then reload comments into the modal
 
-    function createNote() {
-        var currentArticle = $(this).parents(".panel").data();
+    function pullNotes() {
+        // var currentArticle = $(this).parents(".panel").data();
 
         $.get("/api/notes/" + currentArticle._id)
             .then(function(data) {
