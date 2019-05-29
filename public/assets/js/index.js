@@ -25,6 +25,8 @@ $(document).ready(function() {
         for (var i = 0; i < articles.length; i++) {
             articlesArray.push(createContents(articles[i]));
         }
+
+        articleContainer.append(articlesArray);
     }
 
     function createContents(article) {
