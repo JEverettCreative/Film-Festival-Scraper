@@ -2,9 +2,9 @@ $(document).ready(function(){
     
     var articleContainer = $(".article-container");
     $(document).on("click", ".delete-btn", deleteArticle);
-    $(document).on("click", ".notes-btn", pullNotes);
+    // $(document).on("click", ".notes-btn", pullNotes);
     $(document).on("click", ".create-note-btn", createNote);
-    $(document).on("click", ".delete-note-btn", deleteNotes);
+    // $(document).on("click", ".delete-note-btn", deleteNotes);
 
     initializePage();
 
