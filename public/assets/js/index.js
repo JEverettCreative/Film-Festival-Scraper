@@ -3,6 +3,8 @@ $(document).ready(function() {
     var articleContainer = $(".article-container");
     $(document).on("click", ".save-btn", saveArticle);
     $(document).on("click", ".scrape", scrapeNewArticles);
+    // $(document).on("click", ".view-note-btn", viewNotes);
+    $(document).on("click", ".modal-btn", createModal);
 
     initializePage();
 
@@ -35,13 +37,15 @@ $(document).ready(function() {
                 "<div class='panel-heading'>",
                 "<h3>",
                 article.title,
-                "<a class='btn btn-success save-btn'> Save Article</a>",
+                "<a class='btn btn-success save-btn'>Save Article</a>",
                 "<a class='btn btn-alert' href=" + article.link +
                 "> View Source</a>",
                 "</h3>",
                 "</div>",
                 "<div class='panel-body'>",
                 article.summary,
+                // Find a better spot and style for this
+                "<a class='btn btn-alert modal-btn view-note-btn'>Comments</a>",
                 "</div>",
                 "</div>"
             ].join(""));
@@ -92,4 +96,79 @@ $(document).ready(function() {
                 initializePage();
             });
     }
-})
+
+    function createModal() {
+        var currentArticle = $(this).parents(".panel").data();
+
+        var newModal = [
+            "<div class='modal fade show' role='dialog' aria-modal='true' style='display: block'>",
+            "<div class='modal-dialog'>",
+            "<div class='modal-content'>",
+            "<div class='modal-header'>",
+            "<h4>Article Comments: " + currentArticle._id + "</h4>",
+            "</div>",
+            "<div class='modal-body'>",
+            "<ul class='list-group note-container'>",
+            "</ul>",
+            "<textarea placeholder='New Comment' rows='6' cols='60'>",
+            "</textarea>",
+            "<button class='btn btn-primary create-note-btn'>Add Comment",
+            "</button>",
+            "</div>",
+            "</div>",
+            "</div>",
+            "</div>"
+        ].join("");
+
+        $("body").append(newModal);
+        $(".modal").modal("show");
+    }
+
+    // function viewNotes() {
+    //     var currentArticle = $(this).parents(".panel").data();
+
+    //     $.get("/api/notes/" + currentArticle._id)
+    //         .then(function(data) {
+    //             var newModal = [
+    //                 // "<div class='container-fluid text-center'>",
+    //                 // "<h4>Article Comments: ",
+    //                 // currentArticle._id,
+    //                 // "</h4>",
+    //                 // "<hr />",
+    //                 // "<ul class='list-group note-container'>",
+    //                 // "</ul>",
+    //                 // "<textarea placeholder='New Comment' rows='6' cols='60'>",
+    //                 // "</textarea>",
+    //                 // "<button class='btn btn-success create-note-btn'>Save Comment",
+    //                 // "</button>",
+    //                 // "</div>"
+    //                 "<div class='modal fade show' role='dialog' aria-modal='true' style='display: block'>",
+    //                 "<div class='modal-dialog'>",
+    //                 "<div class='modal-content'>",
+    //                 "<div class='modal-header'>",
+    //                 "<h4>Article Comments: " + currentArticle._id + "</h4>",
+    //                 "</div>",
+    //                 "<div class='modal-body'>",
+    //                 "<ul class='list-group note-container'>",
+    //                 "</ul>",
+    //                 "<textarea placeholder='New Comment' rows='6' cols='60'>",
+    //                 "</textarea>",
+    //                 "<button class='btn btn-primary create-note-btn'>Add Comment",
+    //                 "</button>",
+    //                 "</div>",
+    //                 "</div>",
+    //                 "</div>",
+    //                 "</div>"
+    //             ].join("");
+
+    //             var noteInfo = {
+    //                 _id: currentArticle._id,
+    //                 notes: data || []
+    //             };
+
+    //             // Create this function
+    //             // renderNotesList(noteInfo);
+    //         });
+    // }
+    
+});

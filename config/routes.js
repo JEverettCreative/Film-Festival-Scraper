@@ -51,52 +51,65 @@ router.get("/api/scrape", function(req, res) {
     });
   });
   
-  // Route for getting all Articles from the db
-  router.get("/api/articles", function(req, res) {
-    // Grab every document in the Articles collection
-    db.Article.find({ saved: false })
-      .then(function(dbArticle) {
-        // If we were able to successfully find Articles, send them back to the client
-        res.json(dbArticle);
-      })
-      .catch(function(err) {
-        // If an error occurred, send it to the client
-        res.json(err);
-      });
-  });
+// Route for getting all Articles from the db
+router.get("/api/articles", function(req, res) {
+// Grab every document in the Articles collection
+db.Article.find({ saved: false })
+    .then(function(dbArticle) {
+    // If we were able to successfully find Articles, send them back to the client
+    res.json(dbArticle);
+    })
+    .catch(function(err) {
+    // If an error occurred, send it to the client
+    res.json(err);
+    });
+});
 
 //   API Route to pull all saved articles from DB
-    router.get("/api/saved", function(req, res) {
-        db.Article.find({ saved: true })
-            .then(function(dbArticle) {
-                res.json(dbArticle);
-            })
-            .catch(function(err) {
-                res.json(err);
-            });
-    });
+router.get("/api/saved", function(req, res) {
+    db.Article.find({ saved: true })
+        .then(function(dbArticle) {
+            res.json(dbArticle);
+        })
+        .catch(function(err) {
+            res.json(err);
+        });
+});
 
 // Delete an article from the Database (entirely!)
-    router.delete("/api/articles/:id", function(req, res) {
-        db.Article.deleteOne({ _id: req.params.id })
-            .then(function(dbArticle) {
-                res.json(dbArticle);
-            })
-            .catch(function(err) {
-                res.json(err);
-            });
-    });
+router.delete("/api/articles/:id", function(req, res) {
+    db.Article.deleteOne({ _id: req.params.id })
+        .then(function(dbArticle) {
+            res.json(dbArticle);
+        })
+        .catch(function(err) {
+            res.json(err);
+        });
+});
 
 // Update an article to Saved in the DB
-    router.post("/api/articles/:id", function(req, res) {
-        db.Article.findByIdAndUpdate({ _id: req.params.id }, { saved: true })
-            .then(function(dbArticle) {
-                render.json("Article deleted from Saved.");
-            })
-            .catch(function(err) {
-                res.json(err);
-            });
-    });
+router.post("/api/articles/:id", function(req, res) {
+    db.Article.findByIdAndUpdate({ _id: req.params.id }, { saved: true })
+        .then(function(dbArticle) {
+            render.json("Article deleted from Saved.");
+        })
+        .catch(function(err) {
+            res.json(err);
+        });
+});
+
+// View any existing notes for an article
+router.get("/api/notes/:id", function(req, res) {
+    db.Article.findOne({ _id: req.params.id })
+        .populate("note")
+        .then(function(dbArticle) {
+            res.json(dbArticle);
+        })
+        .catch(function(err) {
+            res.json(err);
+        });
+
+});
 
 
 //   // Route for grabbing a specific Article by id, populate it with it's note
