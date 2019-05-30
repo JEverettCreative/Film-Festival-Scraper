@@ -16,6 +16,7 @@ var router = express.Router();
 require("./config/routes")(router);
 // Configure middleware
 
+
 app.use(logger("dev"));
 // Parse request body as JSON
 app.use(express.urlencoded({ extended: true }));
