@@ -3,7 +3,7 @@ $(document).ready(function(){
     var articleContainer = $(".article-container");
     $(document).on("click", ".delete-btn", deleteArticle);
     // $(document).on("click", ".notes-btn", pullNotes);
-    $(document).on("click", ".create-note-btn", createNote);
+    // $(document).on("click", ".create-note-btn", createNote);
     // $(document).on("click", ".delete-note-btn", deleteNotes);
     $(document).on("click", ".modal-btn", createModal);
 
@@ -90,8 +90,10 @@ $(document).ready(function(){
         $(".note-container").empty();
         // Threw the modal creation into an Ajax call with the renderNotesList function following
         // attempting to bring the pieces together so that comments can fill when the modal loads
-        $.get("/api/notes/" + currentArticle._id)
-            .then(function(data) {
+
+        // Commenting out for now
+        // $.get("/api/notes/" + currentArticle._id)
+        //     .then(function(data) {
 
                 var newModal = [
                     "<div class='modal fade show' role='dialog' aria-modal='true' style='display: block'>",
@@ -113,12 +115,12 @@ $(document).ready(function(){
                     "</div>"
                 ].join("");
         
-                renderNotesList(currentArticle);
+                // renderNotesList(currentArticle);
         
                 $("body").append(newModal);
                 $(".modal").modal("show");
 
-            });
+            // });
         
     }
     // CreateModal should be called within the function to viewNotes
